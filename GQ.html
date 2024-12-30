@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- 添加jQuery库 -->
     <title>濮院GQ盛宴</title>
     <link rel="stylesheet" href="styles.css">
 	<style>
@@ -137,5 +138,22 @@
     <footer>
         <p>&copy; 2023 濮院GQ盛宴</p>
     </footer>
+	<script type="text/javascript">
+	        $(document).ready(function() {
+	            // 图片淡入效果
+	            $('#eventImg').on('load', function() {
+	                $(this).fadeIn(1000); // 使用jQuery的fadeIn方法实现淡入效果
+	            }).show(); // 首先显示图片，以便fadeIn可以正常工作
+	 
+	
+	            // 为页面添加平滑滚动功能（当点击内部链接时）
+	            $('a[href^="#"]').on('click', function(e) {
+	                e.preventDefault();
+	                $(document.body).animate({
+	                    scrollTop: $($.attr(this, 'href')).offset().top
+	                }, 1000);
+	            });
+	        });
+		</script>	
 </body>
 </html>

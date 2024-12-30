@@ -154,93 +154,69 @@
 
 	<!-- 网页头-弹性布局 -->  
 
-	<div class="head">  
-
-	    <div>北更楼</div>  
-
-	    <div>翔云观</div>  
-
-	    <div>濮院古桥群</div>  
-
-	    <div>大有桥</div>  
-
-	    <div>章宅</div>  
-
-	    <div>漱芳禅园</div>  
-
-	    <div>梅泾剧场</div>  
-
-	    <div>濮驸马第</div>  
-
-	</div>  
-
+	<div class="head">
+	     <div class="nav-item" data-target="0">北更楼</div>
+	        <div class="nav-item" data-target="1">翔云观</div>
+	        <div class="nav-item" data-target="2">濮院古桥群</div>
+	        <div class="nav-item" data-target="3">大有桥</div>
+	        <div class="nav-item" data-target="4">章宅</div>
+	        <div class="nav-item" data-target="5">漱芳禅园</div>
+	        <div class="nav-item" data-target="6">梅泾剧场</div>
+	        <div class="nav-item" data-target="7">濮驸马第</div>
+	</div>
 	<!-- 正文内容-弹性布局 -->  
 
-	<div class="content">  
+	<div class="content">
+	    <div class="lines">
+	        <div><img src="img/img1.jpg" class="zoomable" /></div>
+	        <div><img src="img/img2.jpg" class="zoomable" /></div>
+	        <div><img src="img/img3.jpg" class="zoomable" /></div>
+	        <div><img src="img/img4.jpg" class="zoomable" /></div>
+	    </div>
+	    <div class="lines">
+	        <div><img src="img/img5.jpg" class="zoomable" /></div>
+	        <div><img src="img/img6.jpg" class="zoomable" /></div>
+	        <div><img src="img/img7.jpg" class="zoomable" /></div>
+	        <div><img src="img/img8.jpg" class="zoomable" /></div>
+	    </div>
+	</div>
 
-	    <div class="lines">  
-
-	        <div><img src="img/img1.jpg" /></div>  
-
-	        <div><img src="img/img2.jpg" /></div>  
-
-	        <div><img src="img/img3.jpg" /></div>  
-
-	        <div><img src="img/img4.jpg" /></div>  
-
-	    </div>  
-
-	    <div class="lines">  
-
-	        <div><img src="img/img5.jpg" /></div>  
-
-	        <div><img src="img/img6.jpg" /></div>  
-
-	        <div><img src="img/img7.jpg" /></div>  
-
-	        <div><img src="img/img8.jpg" /></div>  
-
-	    </div>  
-
-	</div>  
 <!-- 回到首页链接 -->
     <a href="index.html" class="back-to-home">回到首页</a>
 	  
 
-	<script>  
-
-	    document.addEventListener('DOMContentLoaded', () => {  
-
-	        const images = document.querySelectorAll('.lines div img');  
-
-	  
-
-	        images.forEach(img => {  
-
-	            img.addEventListener('mouseenter', () => img.classList.add('zoomed'));  
-
-	            img.addEventListener('mouseleave', () => img.classList.remove('zoomed'));  
-
-	  
-
-	            // 对于触摸事件  
-
-	            img.addEventListener('touchstart', () => img.classList.add('zoomed'));  
-
-	            img.addEventListener('touchend', (event) => {  
-
-	                // 延迟移除类名，以便在触摸滑动时仍然保持放大效果  
-
-	                setTimeout(() => img.classList.remove('zoomed'), 200); // 可以根据需要调整延迟时间  
-
-	            });  
-
-	        });  
-
-	    });  
-
-	</script>  
-
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+	$(document).ready(function() {
+	    // 导航菜单鼠标移上效果
+	    $('.nav-item').mouseenter(function() {
+	        $(this).css('font-size', '1.2em'); // 增大字体
+	    }).mouseleave(function() {
+	        $(this).css('font-size', ''); // 恢复原始字体大小（由CSS样式控制）
+	    });
+	 
+	    // 图片放大效果
+	    $('.head div').click(function() {
+	        $('.zoomable').removeClass('zoomed');
+	        const targetIndex = $(this).data('target');
+	        $('.zoomable').eq(targetIndex).addClass('zoomed');
+	    });
+	 
+	    const images = $('.zoomable');
+	    images.on('mouseenter touchstart', function() {
+	        $(this).addClass('zoomed');
+	    }).on('mouseleave touchend touchmove', function(event) {
+	        if (event.type === 'touchmove') {
+	            const touchedElement = document.elementFromPoint(event.clientX, event.clientY);
+	            if (!$(touchedElement).closest('.zoomable').length) {
+	                $(this).removeClass('zoomed');
+	            }
+	        } else {
+	            $(this).removeClass('zoomed');
+	        }
+	    });
+	});
+	</script>
 	  
 
 	</body>  
